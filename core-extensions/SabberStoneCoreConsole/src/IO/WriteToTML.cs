@@ -11,7 +11,7 @@ namespace SabberStoneCoreConsole.src
 	{
 		public static void Write(LargeCombo cardList)
 		{
-			StreamWriter sw = new StreamWriter("/Users/hc/Desktop/out.tml");
+			StreamWriter sw = new StreamWriter("/Users/hc/Desktop/Evostone-master/TestBed/StrategySearch/resources/decks/pools/metaDecks.tml");
 			Console.WriteLine("Writing............");
 			sw.WriteLine("PoolName = \"Meta Decks\"");
 			sw.WriteLine("[[Decks]]");

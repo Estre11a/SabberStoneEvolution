@@ -57,8 +57,9 @@ namespace SabberStoneCoreConsole
 
 			//Console.WriteLine(Cards.Statistics());
 
-			
-			Console.WriteLine("start read");
+
+			Console.WriteLine(UnitTest.TestAOE(new List<Card> {Cards.FromName("Kobold Geomancer"), Cards.FromName("Swipe") }));
+			/*Console.WriteLine("start read");
 			List<SingleCard> list = Read.read();
 			HashSet<SmallCombo> small = SmallComboGenerator.Evo(list);
 			LargeCombo Deck = LargeComboGenerator.DeckBuilding(list, small);
@@ -66,7 +67,7 @@ namespace SabberStoneCoreConsole
 				Console.Write(card.Name + ", ");
 			Console.WriteLine();
 			Console.WriteLine(Deck.ComboCards.Count);
-			WriteToTML.Write(Deck);
+			WriteToTML.Write(Deck);*/
 			
 			//SabberStoneCoreConsole.PowerHistoryTest.EqualTest();
 			//SabberStoneCoreConsole.PowerHistoryTest.Run();

@@ -14,28 +14,24 @@ namespace SabberStoneCoreConsole.src
 		public UnitTest()
 		{
 		}
-		public static int OneRoundMinionSpell(string MinionName1, Card minion, Card spell)
+
+		public static int OneRoundAOE(List<string> AICards, List<Card> combo)
 		{
 			var game = new Game(new GameConfig
 			{
 				StartPlayer = 1,
 				Player1HeroClass = CardClass.MAGE,
-				Player1Deck = new List<Card>()
-				{
-					Cards.FromName(MinionName1)
-
-				},
+				Player1Deck = new List<Card>(),
 				Player2HeroClass = CardClass.MAGE,
-
-				Player2Deck = new List<Card>()
-				{
-					minion,
-					spell,
-				},
+				Player2Deck = new List<Card>(),
 				Shuffle = false,
 				FillDecks = false,
 				FillDecksPredictably = false
 			});
+			foreach (string cardName in AICards)
+				game.Player1.DeckCards.Add(Cards.FromName(cardName));
+			foreach (Card testCard in combo)
+				game.Player2.DeckCards.Add(testCard);
 
 			game.Player1.BaseMana = 10;
 			game.Player2.BaseMana = 10;
@@ -43,28 +39,31 @@ namespace SabberStoneCoreConsole.src
 
 
 			//AI player
-			var MinionAI = (ICharacter)Generic.DrawCard(game.CurrentPlayer, Cards.FromName(MinionName1));
+			var MinionAI = (ICharacter)Generic.DrawCard(game.CurrentPlayer, Cards.FromName(AICards[0]));
 			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionAI));
 			game.Process(EndTurnTask.Any(game.CurrentPlayer));
 
 			//Test case
-			var MinionTest = (ICharacter)Generic.DrawCard(game.CurrentPlayer, minion);
-			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionTest));
-			IPlayable SpellTest = Generic.DrawCard(game.CurrentPlayer, spell);
-			game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest, MinionAI));
-
-			//ShowLog(game, LogLevel.VERBOSE);
+			foreach(Card testCard in combo)
+			{
+				if(testCard.Type.ToString() == "MINION")
+				{
+					var MinionTest = (ICharacter)Generic.DrawCard(game.CurrentPlayer, testCard);
+					game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionTest));
+				} else
+				{
+					IPlayable SpellTest = Generic.DrawCard(game.CurrentPlayer, testCard);
+					game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest, MinionAI));
+				}
+			}
+			Program.ShowLog(game, LogLevel.VERBOSE);
+			Console.WriteLine(game.CurrentOpponent.BoardZone.FullPrint());
 
 			int health = game.CurrentOpponent.BoardZone.Health();
-
-			//Console.WriteLine(cost1 + ", " + cost2);
-			//Console.WriteLine(game.CurrentOpponent.BoardZone.FullPrint());
-			//Console.WriteLine(game.CurrentPlayer.BoardZone.FullPrint());
-
 			return health;
 		}
 
-		public static int OneRoundMinion(string MinionName1, Card minion2, Card minion3)
+		public static int OneRoundRemove(string AICard, List<Card> combo)
 		{
 			var game = new Game(new GameConfig
 			{
@@ -72,19 +71,18 @@ namespace SabberStoneCoreConsole.src
 				Player1HeroClass = CardClass.MAGE,
 				Player1Deck = new List<Card>()
 				{
-					Cards.FromName(MinionName1)
+					Cards.FromName(AICard)
 				},
 				Player2HeroClass = CardClass.MAGE,
 
-				Player2Deck = new List<Card>()
-				{
-					minion2,
-					minion3,
-				},
+				Player2Deck = new List<Card>(),
 				Shuffle = false,
 				FillDecks = false,
 				FillDecksPredictably = false
 			});
+			
+			foreach (Card testCard in combo)
+				game.Player2.DeckCards.Add(testCard);
 
 			game.Player1.BaseMana = 10;
 			game.Player2.BaseMana = 10;
@@ -92,82 +90,33 @@ namespace SabberStoneCoreConsole.src
 
 
 			//AI player
-			var MinionAI = (ICharacter)Generic.DrawCard(game.CurrentPlayer, Cards.FromName(MinionName1));
+			var MinionAI = (ICharacter)Generic.DrawCard(game.CurrentPlayer, Cards.FromName(AICard));
 			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionAI));
 			game.Process(EndTurnTask.Any(game.CurrentPlayer));
 
 			//Test case
-			var MinionTest2 = (ICharacter)Generic.DrawCard(game.CurrentPlayer, minion2);
-			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionTest2));
-			var MinionTest3 = (ICharacter)Generic.DrawCard(game.CurrentPlayer, minion3);
-			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionTest3));
-
-
-			//ShowLog(game, LogLevel.VERBOSE);
-
-			int health = game.CurrentOpponent.BoardZone.Health();
-
-			//Console.WriteLine(cost1 + ", " + cost2);
-			//Console.WriteLine(game.CurrentOpponent.BoardZone.FullPrint());
-			//Console.WriteLine(game.CurrentPlayer.BoardZone.FullPrint());
-
-			return health;
-		}
-
-
-		public static int OneRoundSpell(string MinionName1, Card spell1, Card spell2)
-		{
-			var game = new Game(new GameConfig
+			foreach (Card testCard in combo)
 			{
-				StartPlayer = 1,
-				Player1HeroClass = CardClass.MAGE,
-				Player1Deck = new List<Card>()
+				if (testCard.Type.ToString() == "MINION")
 				{
-					Cards.FromName(MinionName1)
-
-				},
-				Player2HeroClass = CardClass.MAGE,
-
-				Player2Deck = new List<Card>()
+					var MinionTest = (ICharacter)Generic.DrawCard(game.CurrentPlayer, testCard);
+					game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionTest));
+				}
+				else
 				{
-					spell1,
-					spell2,
-				},
-				Shuffle = false,
-				FillDecks = false,
-				FillDecksPredictably = false
-			});
-
-			game.Player1.BaseMana = 10;
-			game.Player2.BaseMana = 10;
-			game.StartGame();
-
-
-			//AI player
-			var MinionAI = (ICharacter)Generic.DrawCard(game.CurrentPlayer, Cards.FromName(MinionName1));
-			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionAI));
-			game.Process(EndTurnTask.Any(game.CurrentPlayer));
-
-			//Test case
-
-			IPlayable SpellTest1 = Generic.DrawCard(game.CurrentPlayer, spell1);
-			game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest1, MinionAI));
-			IPlayable SpellTest2 = Generic.DrawCard(game.CurrentPlayer, spell2);
-			game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest2, MinionAI));
-
+					IPlayable SpellTest = Generic.DrawCard(game.CurrentPlayer, testCard);
+					game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest, MinionAI));
+				}
+			}
 			//ShowLog(game, LogLevel.VERBOSE);
-
-			int health = game.CurrentOpponent.BoardZone.Health();
-
-			//Console.WriteLine(cost1 + ", " + cost2);
 			//Console.WriteLine(game.CurrentOpponent.BoardZone.FullPrint());
 			//Console.WriteLine(game.CurrentPlayer.BoardZone.FullPrint());
 
+			int health = game.CurrentOpponent.BoardZone.Health();
 			return health;
 		}
-
-
-		public static int Test(Card[] Combo)
+		
+		public static int TestRemove(List<Card> combo)
 		{
 			var MinionsToAttack = new List<string>() {
 				"Abusive Sergeant",			//1
@@ -180,31 +129,41 @@ namespace SabberStoneCoreConsole.src
 				"Ironbark Protector",		//8
 				"Grommash Hellscream",		//9
 			};
-
-		
 			int TotalScore = 0;
-			foreach (Card card in Combo) //cards mana cost
+			foreach (string AICard in MinionsToAttack)
 			{
-				if (card == null) //null card return -1
-					return -1;
-				TotalScore += card.Cost;
+				TotalScore += OneRoundRemove(AICard, combo); //health
 			}
-			for (int j = 0; j < MinionsToAttack.Count; j++)
+			return TotalScore;
+		}
+
+
+		public static int TestAOE(List<Card> combo)
+		{
+			var MinionsToAttack = new List<List<string>>() { 
+			new List<string>(){ "Abusive Sergeant","Abusive Sergeant", "Kobold Geomancer"},        //112
+			new List<string>(){ "Kobold Geomancer","Kobold Geomancer","Ironfur Grizzly" },         //223
+			new List<string>(){ "Ironfur Grizzly","Ironfur Grizzly","Dark Iron Dwarf" },            //334
+			new List<string>(){ "Dark Iron Dwarf","Dark Iron Dwarf", "Chillwind Yeti" },            //445
+			new List<string>(){ "Chillwind Yeti", "Chillwind Yeti","Temple Enforcer"  },			//556
+			new List<string>(){ "Temple Enforcer","Temple Enforcer" , "Boulderfist Ogre"},           //667
+			new List<string>(){ "Boulderfist Ogre","Boulderfist Ogre","Ironbark Protector" },        //778
+			new List<string>(){ "Ironbark Protector","Ironbark Protector","Grommash Hellscream" },     //889
+			new List<string>(){ "Grommash Hellscream","Grommash Hellscream","Grommash Hellscream" },	//999
+			};
+
+			int TotalScore = 0;
+			foreach (List<string> AICards in MinionsToAttack)
 			{
-				//Console.WriteLine(card1.Type + " " + card2.Type);
-				Card card1 = Combo[0], card2 = Combo[1];
-				string type1 = card1.Type.ToString(), type2 = card2.Type.ToString();
-				if (type1 == "MINION" && type2 != "MINION")
-					TotalScore += OneRoundMinionSpell(MinionsToAttack[j], card1, card2); //health
-				else if (type2 == "MINION" && type1 != "MINION")
-					TotalScore += OneRoundMinionSpell(MinionsToAttack[j], card2, card1); //health
-				else if (type1 == "MINION" && type2 == "MINION")
-					TotalScore = OneRoundMinion(MinionsToAttack[j], card1, card2); //health
-				else if (type1 == "SPELL" && type2 == "SPELL")
-					TotalScore = OneRoundSpell(MinionsToAttack[j], card1, card2); //health
+				TotalScore += OneRoundAOE(AICards, combo); //health
 			}
 			return TotalScore;
 
+		}
+		public static int TestHQ(List<Card> combo)
+		{
+			//TODO:
+			return -1;
 		}
 	}
 }

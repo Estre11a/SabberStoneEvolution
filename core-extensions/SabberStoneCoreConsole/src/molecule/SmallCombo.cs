@@ -30,12 +30,15 @@ namespace SabberStoneCoreConsole.src
 			Cost = -1;
 			if (card1 != null && card2 != null)
 			{
-				Score = UnitTest.Test(new Card[] { card1.card, card2.card });
 				Cost = card1.card.Cost + card2.card.Cost;
-			}
-				
 
-			
+				Score = Cost + UnitTest.TestRemove(ComboCards);
+				if(Tags.Contains("AOE"))
+					Score = Math.Min(Score, UnitTest.TestAOE(ComboCards));
+				if(Tags.Contains("High Quality"))
+					Score = Math.Min(Score, UnitTest.TestHQ(ComboCards));
+				
+			}
 		}
 		public void output()
 		{
@@ -47,7 +50,6 @@ namespace SabberStoneCoreConsole.src
 				foreach (string tag in Tags)
 					Console.WriteLine("Tag:" + tag);
 				Console.WriteLine("====================");
-			
 		}
 	}
 	
