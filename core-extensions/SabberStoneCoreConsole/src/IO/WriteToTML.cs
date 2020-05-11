@@ -15,7 +15,7 @@ namespace SabberStoneCoreConsole.src
 			Console.WriteLine("Writing............");
 			sw.WriteLine("PoolName = \"Meta Decks\"");
 			sw.WriteLine("[[Decks]]");
-			sw.WriteLine("DeckName = \"Tempo\"");
+			sw.WriteLine("DeckName = \"Tempo Rogue\"");
 			string className = cardList.ComboClass.ToLower();
 			sw.WriteLine("ClassName = \"" + Char.ToUpper(className[0])+ className.Substring(1) + "\"");
 

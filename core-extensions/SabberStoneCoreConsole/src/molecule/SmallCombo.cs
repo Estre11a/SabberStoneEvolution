@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SabberStoneCore.Model;
 namespace SabberStoneCoreConsole.src
 {
-	public class CardCombo
+	public class SmallCombo
 	{
 		public HashSet<string> Tags { get; }
 		public List<Card> ComboCards { get; }
@@ -11,7 +11,7 @@ namespace SabberStoneCoreConsole.src
 		public int Score { get; }
 		public int Cost { get; set; }
 
-		public CardCombo(CardInfo card1, CardInfo card2) //from writeCombo
+		public SmallCombo(SingleCard card1, SingleCard card2) //from writeCombo
 		{
 			Tags = new HashSet<string>(card1.tags);
 			Tags.UnionWith(card2.tags);

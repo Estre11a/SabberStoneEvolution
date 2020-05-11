@@ -5,17 +5,17 @@ using SabberStoneCore.Model;
 
 namespace SabberStoneCoreConsole.src
 {
-	public static class GenerateCombo
+	public static class SmallComboGenerator
 	{
-		static public List<CardCombo> comboList = new List<CardCombo>();
+		static public List<SmallCombo> comboList = new List<SmallCombo>();
 		static int CountLimit = 200;
 		static Random rand = new Random();
 
 	
 
-		public static HashSet<CardCombo> RandomComboGenerator(List<CardInfo> CardWithtag)
+		public static HashSet<SmallCombo> RandomComboGenerator(List<SingleCard> CardWithtag)
 		{
-			HashSet<CardCombo> result = new HashSet<CardCombo>();
+			HashSet<SmallCombo> result = new HashSet<SmallCombo>();
 			int count = 0;
 			while(count < CountLimit)
 			{
@@ -31,7 +31,7 @@ namespace SabberStoneCoreConsole.src
 				int[] indexSet = new int[] { index1, index2 };
 				if (index1 != index2 && !randomSet.Contains(indexSet) && CanReact(CardWithtag[index1], CardWithtag[index2]))
 				{
-					result.Add(new CardCombo(CardWithtag[index1], CardWithtag[index2]));
+					result.Add(new SmallCombo(CardWithtag[index1], CardWithtag[index2]));
 					randomSet.Add(indexSet);
 					count++;
 				}
@@ -45,7 +45,7 @@ namespace SabberStoneCoreConsole.src
 		}*/
 
 
-		public static bool CanReact(CardInfo card1, CardInfo card2)
+		public static bool CanReact(SingleCard card1, SingleCard card2)
 		{
 			// Rule 0 : not belongs to different classes and total cost less than 10
 			if (card1.card.Cost + card2.card.Cost > 10)
@@ -70,13 +70,13 @@ namespace SabberStoneCoreConsole.src
 			return false;
 		}
 
-		public static HashSet<CardCombo> Evo(List<CardInfo> CardWithtag)
+		public static HashSet<SmallCombo> Evo(List<SingleCard> CardWithtag)
 		{
-			HashSet<CardCombo> result = new HashSet<CardCombo>();
+			HashSet<SmallCombo> result = new HashSet<SmallCombo>();
 			while(result.Count < CountLimit)
 			{
-				HashSet<CardCombo> comboTemp = RandomComboGenerator(CardWithtag);
-				foreach (CardCombo combo in comboTemp)
+				HashSet<SmallCombo> comboTemp = RandomComboGenerator(CardWithtag);
+				foreach (SmallCombo combo in comboTemp)
 				{
 					//Console.WriteLine(combo.Score);
 					if (combo.Score > 0 && combo.Score < 15)

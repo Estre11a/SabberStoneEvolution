@@ -11,14 +11,14 @@ namespace SabberStoneCoreConsole.src
 		static Random rand = new Random();
 
 
-		public static List<LargeCombo> InitToLarge(List<CardInfo> CardWithTag, HashSet<CardCombo> ComboSet)
+		public static List<LargeCombo> InitToLarge(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet)
 		{
 			
-			foreach(CardInfo singleCard in CardWithTag)
+			foreach(SingleCard singleCard in CardWithTag)
 			{
 				Container.Add(new LargeCombo(singleCard));
 			}
-			foreach(CardCombo smallCombo in ComboSet)
+			foreach(SmallCombo smallCombo in ComboSet)
 			{
 				Container.Add(new LargeCombo(smallCombo));
 			}
@@ -84,7 +84,7 @@ namespace SabberStoneCoreConsole.src
 			}	
 		}
 
-		public static LargeCombo DeckBuilding(List<CardInfo> CardWithTag, HashSet<CardCombo> ComboSet)
+		public static LargeCombo DeckBuilding(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet)
 		{
 			InitToLarge(CardWithTag, ComboSet);
 			while (Deck == null)

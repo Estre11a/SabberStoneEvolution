@@ -16,4 +16,12 @@
     <ProjectReference Include="..\..\SabberStoneCore\SabberStoneCore.csproj" />
     <ProjectReference Include="..\SabberStoneBasicAI\SabberStoneBasicAI.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\molecule\" />
+    <Folder Include="src\reaction\" />
+    <Folder Include="src\IO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="src\GenerateCombo.cs" />
+  </ItemGroup>
 </Project>

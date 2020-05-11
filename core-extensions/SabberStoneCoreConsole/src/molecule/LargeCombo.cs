@@ -21,7 +21,7 @@ namespace SabberStoneCoreConsole.src
 			Cost = 0;
 			ComboCards = new List<Card>();
 		}*/
-		public LargeCombo(CardInfo cardInfo)
+		public LargeCombo(SingleCard cardInfo)
 		{
 			
 			ComboClass = cardInfo.card.Class.ToString();
@@ -43,7 +43,7 @@ namespace SabberStoneCoreConsole.src
 			ComboCards.Add(cardInfo.card);
 		}
 
-		public LargeCombo(CardCombo cardCombo)
+		public LargeCombo(SmallCombo cardCombo)
 		{
 			ComboClass = cardCombo.ComboClass;
 			Tags = new Dictionary<string, int>();

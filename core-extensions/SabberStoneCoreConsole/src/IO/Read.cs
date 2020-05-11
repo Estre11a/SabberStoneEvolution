@@ -25,13 +25,13 @@ namespace SabberStoneCoreConsole.src
 			public string class_ { get; set; }
 		}
 
-		public static List<CardInfo> read()
+		public static List<SingleCard> read()
 		{
 			using (StreamReader r = new StreamReader("/Users/hc/Desktop/cards.collectible.json"))
 			{
 				string json = r.ReadToEnd();
 				List<CardPool> items = JsonConvert.DeserializeObject<List<CardPool>>(json);
-				List<CardInfo> cardContainer = new List<CardInfo>();
+				List<SingleCard> cardContainer = new List<SingleCard>();
 				int count = 0;
 				foreach (var item in items)
 				{
@@ -62,7 +62,7 @@ namespace SabberStoneCoreConsole.src
 						tagSet.Add(tag);
 					}
 
-					cardContainer.Add(new CardInfo(tagSet, cardFromRead));
+					cardContainer.Add(new SingleCard(tagSet, cardFromRead));
 					
 
 				}
