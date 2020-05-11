@@ -9,6 +9,7 @@ namespace SabberStoneCoreConsole.src
 		public List<Card> ComboCards { get; }
 		public string ComboClass { get; }
 		public int Score { get; }
+		public int Cost { get; set; }
 
 		public CardCombo(CardInfo card1, CardInfo card2) //from writeCombo
 		{
@@ -26,8 +27,15 @@ namespace SabberStoneCoreConsole.src
 				ComboClass = card2.card.Class.ToString();
 
 			Score = -1;
+			Cost = -1;
 			if (card1 != null && card2 != null)
-				Score = UnitTest.Test(new Card[] {card1.card, card2.card});
+			{
+				Score = UnitTest.Test(new Card[] { card1.card, card2.card });
+				Cost = card1.card.Cost + card2.card.Cost;
+			}
+				
+
+			
 		}
 		public void output()
 		{

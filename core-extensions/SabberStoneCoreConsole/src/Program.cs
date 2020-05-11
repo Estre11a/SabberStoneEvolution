@@ -60,10 +60,24 @@ namespace SabberStoneCoreConsole
 			
 			Console.WriteLine("start read");
 			List<CardInfo> list = Read.read();
-
-			Console.WriteLine("end read");
-			HashSet<CardCombo> result = GenerateCombo.Evo(list);
-			Console.WriteLine("end pq");
+			HashSet<CardCombo> small = GenerateCombo.Evo(list);
+			Console.WriteLine("1");
+			LargeCombo Deck = LargeComboGenerator.DeckBuilding(list, small);
+			foreach (Card card in Deck.ComboCards)
+				Console.Write(card.Name + ", ");
+			Console.WriteLine();
+			Console.WriteLine(Deck.ComboCards.Count);
+			WriteToTML.Write(Deck);
+			/*foreach (LargeCombo l in container)
+			{
+				foreach (Card card in l.ComboCards)
+					Console.Write(card.Name + " ");
+				Console.WriteLine();
+				foreach (var pair in l.Tags)
+					Console.WriteLine(pair.Key + ": " +pair.Value);
+				Console.WriteLine("====================");
+			}*/
+			/*
 			foreach (CardCombo combo in result)
 			{
 				
@@ -77,7 +91,7 @@ namespace SabberStoneCoreConsole
 
 			Console.WriteLine(result.Count);
 
-
+			*/
 			//SabberStoneCoreConsole.PowerHistoryTest.EqualTest();
 			//SabberStoneCoreConsole.PowerHistoryTest.Run();
 

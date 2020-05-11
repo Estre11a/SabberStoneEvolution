@@ -73,15 +73,14 @@ namespace SabberStoneCoreConsole.src
 		public static HashSet<CardCombo> Evo(List<CardInfo> CardWithtag)
 		{
 			HashSet<CardCombo> result = new HashSet<CardCombo>();
-			//while(result.Count < CountLimit)
+			while(result.Count < CountLimit)
 			{
 				HashSet<CardCombo> comboTemp = RandomComboGenerator(CardWithtag);
 				foreach (CardCombo combo in comboTemp)
 				{
-					Console.WriteLine(combo.Score);
-					if (combo.Score < 0 || combo.Score > 15)
-						continue;
-					result.Add(combo);
+					//Console.WriteLine(combo.Score);
+					if (combo.Score > 0 && combo.Score < 15)
+						result.Add(combo);
 				}
 			}
 			return result;
