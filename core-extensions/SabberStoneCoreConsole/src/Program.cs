@@ -63,6 +63,13 @@ namespace SabberStoneCoreConsole
 			List<SingleCard> list = Read.read();
 			HashSet<SmallCombo> small = SmallComboGenerator.Evo(list);
 			LargeCombo Deck = LargeComboGenerator.DeckBuilding(list, small);
+
+			// Use this line to get two Decks
+			// LargeCombo[] DeckArray = LargeComboGenerator.DeckBuildingBinary(list, small);
+
+			// Then use this line to update the weights
+			//DynamicVectorCalculator.UpdateWeight(winCountLow, winCountHigh);
+
 			foreach (Card card in Deck.ComboCards)
 				Console.Write(card.Name + ", ");
 			Console.WriteLine();
