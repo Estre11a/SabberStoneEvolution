@@ -32,11 +32,11 @@ namespace SabberStoneCoreConsole.src
 			{
 				Cost = card1.card.Cost + card2.card.Cost;
 
-				Score = Cost + UnitTest.TestRemove(ComboCards);
+				Score = Cost + UnitTest.TestRemove(ComboCards, ComboClass);
 				if(Tags.Contains("AOE"))
-					Score = Math.Min(Score, UnitTest.TestAOE(ComboCards));
+					Score = Math.Min(Score, UnitTest.TestAOE(ComboCards, ComboClass));
 				if(Tags.Contains("High Quality"))
-					Score = Math.Min(Score, UnitTest.TestHQ(ComboCards));
+					Score = Math.Min(Score, UnitTest.TestHQ(ComboCards, ComboClass));
 				
 			}
 		}

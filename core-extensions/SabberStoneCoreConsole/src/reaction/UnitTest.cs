@@ -14,56 +14,84 @@ namespace SabberStoneCoreConsole.src
 		public UnitTest()
 		{
 		}
+		public static Dictionary<string, int> CARDCLASS = new Dictionary<string, int>()
+		{
+			{"ANOTHER_CLASS",-2},
+			{"OP_CLASS", -1 },
+			{"INVALID",0 },
+			{"DEATHKNIGHT",1 },
+			{"DRUID",  2 },
+			{"HUNTER",  3 },
+			{"MAGE",  4 },
+			{"PALADIN",  5 },
+			{"PRIEST",  6 },
+			{"ROGUE",  7 },
+			{"SHAMAN", 8 },
+			{"WARLOCK",  9 },
+			{"WARRIOR",  10 },
+			{"DREAM",  11 },
+			{"NEUTRAL",  12 },
+			{"WHIZBANG",  13},	
+		};
 
-		public static int OneRoundAOE(List<string> AICards, List<Card> combo)
+		public static int OneRoundAOE(List<string> AICards, List<Card> combo, string comboClass)
 		{
 			var game = new Game(new GameConfig
 			{
 				StartPlayer = 1,
 				Player1HeroClass = CardClass.MAGE,
-				Player1Deck = new List<Card>(),
-				Player2HeroClass = CardClass.MAGE,
-				Player2Deck = new List<Card>(),
+				
+				Player2HeroClass = (CardClass)CARDCLASS[comboClass],
+			
 				Shuffle = false,
-				FillDecks = false,
+				FillDecks = true,
 				FillDecksPredictably = false
 			});
-			foreach (string cardName in AICards)
-				game.Player1.DeckCards.Add(Cards.FromName(cardName));
-			foreach (Card testCard in combo)
-				game.Player2.DeckCards.Add(testCard);
 
 			game.Player1.BaseMana = 10;
 			game.Player2.BaseMana = 10;
 			game.StartGame();
 
+			foreach(string cardname in AICards)
+			{
+				Console.WriteLine(cardname);
+				game.Process(PlayCardTask.Any(game.CurrentPlayer,Entity.FromCard(game.CurrentPlayer, Cards.FromName(cardname), zone: game.CurrentPlayer.HandZone)));
 
-			//AI player
-			var MinionAI = (ICharacter)Generic.DrawCard(game.CurrentPlayer, Cards.FromName(AICards[0]));
-			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionAI));
+				game.Process(EndTurnTask.Any(game.CurrentPlayer));
+				game.Process(EndTurnTask.Any(game.CurrentPlayer));
+			}
 			game.Process(EndTurnTask.Any(game.CurrentPlayer));
 
-			//Test case
-			foreach(Card testCard in combo)
+			if (combo[0].Type.ToString() != "MINION")//minion card first
 			{
-				if(testCard.Type.ToString() == "MINION")
+				combo.Reverse();
+			}
+			foreach(Card card in combo)
+			{
+				if(card.Type.ToString() != "MINION")
 				{
-					var MinionTest = (ICharacter)Generic.DrawCard(game.CurrentPlayer, testCard);
-					game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionTest));
-				} else
+					
+					IPlayable SpellTest = Generic.DrawCard(game.CurrentPlayer, card);
+					game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest, game.CurrentOpponent.BoardZone[0]));
+				}
+				else
 				{
-					IPlayable SpellTest = Generic.DrawCard(game.CurrentPlayer, testCard);
-					game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest, MinionAI));
+					game.Process(PlayCardTask.Any(game.CurrentPlayer, Entity.FromCard(game.CurrentPlayer, card, zone: game.CurrentPlayer.HandZone)));
+
 				}
 			}
+			game.Process(EndTurnTask.Any(game.CurrentPlayer));
+
+			
 			Program.ShowLog(game, LogLevel.VERBOSE);
 			Console.WriteLine(game.CurrentOpponent.BoardZone.FullPrint());
+			Console.WriteLine(game.CurrentPlayer.BoardZone.FullPrint());
 
 			int health = game.CurrentOpponent.BoardZone.Health();
 			return health;
 		}
 
-		public static int OneRoundRemove(string AICard, List<Card> combo)
+		public static int OneRoundRemove(string AICard, List<Card> combo, string comboClass)
 		{
 			var game = new Game(new GameConfig
 			{
@@ -73,7 +101,7 @@ namespace SabberStoneCoreConsole.src
 				{
 					Cards.FromName(AICard)
 				},
-				Player2HeroClass = CardClass.MAGE,
+				Player2HeroClass = (CardClass)CARDCLASS[comboClass],
 
 				Player2Deck = new List<Card>(),
 				Shuffle = false,
@@ -116,51 +144,51 @@ namespace SabberStoneCoreConsole.src
 			return health;
 		}
 		
-		public static int TestRemove(List<Card> combo)
+		public static int TestRemove(List<Card> combo, string comboClass)
 		{
 			var MinionsToAttack = new List<string>() {
-				"Abusive Sergeant",			//1
-				"Kobold Geomancer",			//2
-				"Ironfur Grizzly",			//3
-				"Dark Iron Dwarf",			//4
-				"Chillwind Yeti",			//5
-				"Temple Enforcer",			//6
-				"Boulderfist Ogre",			//7
-				"Ironbark Protector",		//8
-				"Grommash Hellscream",		//9
+				"Murloc Raider",	//1
+				"Bloodfen Raptor",	//2
+				"River Crocolisk",	//3
+				"Ogre Magi",		//4
+				"Chillwind Yeti",	//5
+				"Spiteful Smith",	//6
+				"Boulderfist Ogre",	//7
+				"Sea Giant",		//8
+				"Grommash Hellscream"		//9
 			};
 			int TotalScore = 0;
 			foreach (string AICard in MinionsToAttack)
 			{
-				TotalScore += OneRoundRemove(AICard, combo); //health
+				TotalScore += OneRoundRemove(AICard, combo, comboClass); //health
 			}
 			return TotalScore;
 		}
 
 
-		public static int TestAOE(List<Card> combo)
+		public static int TestAOE(List<Card> combo, string comboClass)
 		{
 			var MinionsToAttack = new List<List<string>>() { 
-			new List<string>(){ "Abusive Sergeant","Abusive Sergeant", "Kobold Geomancer"},        //112
-			new List<string>(){ "Kobold Geomancer","Kobold Geomancer","Ironfur Grizzly" },         //223
-			new List<string>(){ "Ironfur Grizzly","Ironfur Grizzly","Dark Iron Dwarf" },            //334
-			new List<string>(){ "Dark Iron Dwarf","Dark Iron Dwarf", "Chillwind Yeti" },            //445
-			new List<string>(){ "Chillwind Yeti", "Chillwind Yeti","Temple Enforcer"  },			//556
-			new List<string>(){ "Temple Enforcer","Temple Enforcer" , "Boulderfist Ogre"},           //667
-			new List<string>(){ "Boulderfist Ogre","Boulderfist Ogre","Ironbark Protector" },        //778
-			new List<string>(){ "Ironbark Protector","Ironbark Protector","Grommash Hellscream" },     //889
+			new List<string>(){ "Murloc Raider", "Murloc Raider", "Bloodfen Raptor"},        //112
+			new List<string>(){ "Bloodfen Raptor", "Bloodfen Raptor", "River Crocolisk" },         //223
+			new List<string>(){ "River Crocolisk", "River Crocolisk", "Ogre Magi" },            //334
+			new List<string>(){ "Ogre Magi", "Ogre Magi", "Chillwind Yeti" },            //445
+			new List<string>(){ "Chillwind Yeti", "Chillwind Yeti", "Spiteful Smith"  },			//556
+			new List<string>(){ "Spiteful Smith", "Spiteful Smith", "Boulderfist Ogre"},           //667
+			new List<string>(){ "Boulderfist Ogre", "Boulderfist Ogre", "Sea Giant" },        //778
+			new List<string>(){ "Sea Giant", "Sea Giant", "Grommash Hellscream" },     //889
 			new List<string>(){ "Grommash Hellscream","Grommash Hellscream","Grommash Hellscream" },	//999
 			};
 
 			int TotalScore = 0;
 			foreach (List<string> AICards in MinionsToAttack)
 			{
-				TotalScore += OneRoundAOE(AICards, combo); //health
+				TotalScore += OneRoundAOE(AICards, combo, comboClass); //health
 			}
 			return TotalScore;
 
 		}
-		public static int TestHQ(List<Card> combo)
+		public static int TestHQ(List<Card> combo, string comboClass)
 		{
 			//TODO:
 			return -1;

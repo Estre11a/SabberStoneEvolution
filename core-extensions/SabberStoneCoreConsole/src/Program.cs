@@ -58,23 +58,40 @@ namespace SabberStoneCoreConsole
 			//Console.WriteLine(Cards.Statistics());
 
 
-			Console.WriteLine(UnitTest.TestAOE(new List<Card> {Cards.FromName("Kobold Geomancer"), Cards.FromName("Swipe") }));
+			/*int winCountLow = 0, winCountHigh = 0;
+			StreamReader sr = new StreamReader("/Users/hc/Desktop/wincount.txt", Encoding.Default);
+			string line = sr.ReadLine();
+			foreach (string count in line.Split(","))
+			{
+				winCountLow = Math.Max(winCountLow, Int32.Parse(count));
+			}
+			line = sr.ReadLine();
+			foreach (string count in line.Split(","))
+			{
+				winCountHigh = Math.Max(winCountLow, Int32.Parse(count));
+			}
+			*/
+
+
+			Console.WriteLine(UnitTest.TestAOE(new List<Card> {Cards.FromName("Kobold Geomancer"), Cards.FromName("Swipe") }, "DRUID"));
 			/*Console.WriteLine("start read");
 			List<SingleCard> list = Read.read();
 			HashSet<SmallCombo> small = SmallComboGenerator.Evo(list);
 			LargeCombo Deck = LargeComboGenerator.DeckBuilding(list, small);
 
 			// Use this line to get two Decks
-			// LargeCombo[] DeckArray = LargeComboGenerator.DeckBuildingBinary(list, small);
+			LargeCombo[] DeckArray = LargeComboGenerator.DeckBuildingBinary(list, small);
 
 			// Then use this line to update the weights
-			//DynamicVectorCalculator.UpdateWeight(winCountLow, winCountHigh);
+			DynamicVectorCalculator.UpdateWeight(winCountLow, winCountHigh);
 
 			foreach (Card card in Deck.ComboCards)
 				Console.Write(card.Name + ", ");
 			Console.WriteLine();
 			Console.WriteLine(Deck.ComboCards.Count);
-			WriteToTML.Write(Deck);*/
+			WriteToTML.Write(Deck);
+			*/
+
 			
 			//SabberStoneCoreConsole.PowerHistoryTest.EqualTest();
 			//SabberStoneCoreConsole.PowerHistoryTest.Run();
