@@ -35,11 +35,11 @@ namespace SabberStoneCoreConsole.src
 				int count = 0;
 				foreach (var item in items)
 				{
-					if ((String.Compare(item.set, "EXPERT1") == 1) && (String.Compare(item.set, "CORE") == 1))
+					if ((item.set != "EXPERT1" && item.set != "CORE"))
 					{
 						continue;
 					}
-					if (String.Compare(item.type, "HERO") == 0)
+					if (item.type == "HERO")
 					{
 						continue;
 					}

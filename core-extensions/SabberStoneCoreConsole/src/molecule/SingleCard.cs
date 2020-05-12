@@ -22,9 +22,9 @@ namespace SabberStoneCoreConsole.src
 			AOEScore = card.ATK;
 			HQScore = card.Health + card.ATK - card.Cost;
 			
-			if (card.Class.ToString() != "NEUTRAL")
-				RMScore = UnitTest.TestRemove(new List<Card> { card }, card.Class.ToString());
-			if (Tags.Contains("AOE") && card.Class.ToString() != "NEUTRAL")
+			
+			RMScore = UnitTest.TestRemove(new List<Card> { card }, card.Class.ToString());
+			if (Tags.Contains("AOE"))
 				AOEScore = UnitTest.TestAOE(new List<Card> { card }, card.Class.ToString());
 		}
 		public void output()

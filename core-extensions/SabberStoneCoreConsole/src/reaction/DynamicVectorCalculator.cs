@@ -22,7 +22,17 @@ namespace SabberStoneCoreConsole.src
 		static double Low = 0.0;
 		static double Mid = 0.5;
 
+		public double CalculateNew(LargeCombo large1, LargeCombo large2)
+		{
+			double vecP = 1.0;
+			double vecCost = 1.0;
+			double vecAOE = 1.0;
+			double vecRemove = 1.0;
+			double vecHQ = 1.0;
 
+			vecP = (vecCost * wCost + vecAOE * wAOE + vecRemove * wRemove + vecHQ * wHQ) / (wRemove + wHQ + wAOE + wCost);
+			return vecP;
+		}
 		public double Calculate(LargeCombo large1, LargeCombo large2)
 		{
 			double vecP = 1.0;

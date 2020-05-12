@@ -92,9 +92,12 @@ namespace SabberStoneCoreConsole
 			//DynamicVectorCalculator.UpdateWeight(winCountLow, winCountHigh);
 
 			foreach (Card card in Deck.ComboCards)
-				Console.Write(card.Name + ", ");
+				Console.Write(card.Name +"("+ card.Class.ToString()+ "), ");
 			Console.WriteLine();
-			Console.WriteLine(Deck.ComboCards.Count);
+			Console.WriteLine("AOE:"+Deck.AOEScore);
+			Console.WriteLine("HQ:" + Deck.HQScore);
+			Console.WriteLine("RM:" + Deck.RMScore);
+
 			WriteToTML.Write(Deck);
 			
 

@@ -35,19 +35,15 @@ namespace SabberStoneCoreConsole.src
 			if (card1 != null && card2 != null)
 			{
 				Cost = card1.card.Cost + card2.card.Cost;
-				if (ComboClass != "NEUTRAL")
-				{
-					RMScore = UnitTest.TestRemove(ComboCards, ComboClass);
-					if (Tags.Contains("AOE"))
-						AOEScore = UnitTest.TestAOE(ComboCards, ComboClass);
-				}		
+				
+				RMScore = UnitTest.TestRemove(ComboCards, ComboClass);
+				if (Tags.Contains("AOE"))
+					AOEScore = UnitTest.TestAOE(ComboCards, ComboClass);
+					
 				if(Tags.Contains("High Quality"))
 					HQScore = card1.card.Health + card2.card.Health
 							+ card1.card.ATK + card2.card.ATK
 							- Cost;
-
-				
-				
 			}
 		}
 		public void output()

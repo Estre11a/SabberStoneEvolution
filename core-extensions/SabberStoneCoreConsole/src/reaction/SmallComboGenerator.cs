@@ -48,8 +48,8 @@ namespace SabberStoneCoreConsole.src
 			// Rule 0 : not belongs to different classes and total cost less than 10
 			if (card1.card.Cost + card2.card.Cost > 10)
 				return false;
-			if (card1.card.Class.ToString() != "NEUTRAL" && card1.card.Class.ToString() != "NEUTRAL"
-				&& card1.card.Class != card1.card.Class)
+			if (card1.card.Class.ToString() != "NEUTRAL" && card2.card.Class.ToString() != "NEUTRAL"
+				&& card1.card.Class != card2.card.Class)
 				return false;
 			// Rule 1 : has same tag
 			HashSet<string> intersect = new HashSet<string>(card1.Tags);
