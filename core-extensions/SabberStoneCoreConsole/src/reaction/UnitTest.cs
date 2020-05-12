@@ -16,9 +16,6 @@ namespace SabberStoneCoreConsole.src
 		}
 		public static Dictionary<string, int> CARDCLASS = new Dictionary<string, int>()
 		{
-			{"ANOTHER_CLASS",-2},
-			{"OP_CLASS", -1 },
-			{"INVALID",0 },
 			{"DEATHKNIGHT",1 },
 			{"DRUID",  2 },
 			{"HUNTER",  3 },
@@ -28,14 +25,17 @@ namespace SabberStoneCoreConsole.src
 			{"ROGUE",  7 },
 			{"SHAMAN", 8 },
 			{"WARLOCK",  9 },
-			{"WARRIOR",  10 },
-			{"DREAM",  11 },
-			{"NEUTRAL",  12 },
-			{"WHIZBANG",  13},	
+			{ "WARRIOR",10},
+			{"DREAM" , 11 },
+			{"NEUTRA" , 12 },
+			{"WHIZBANG" , 13 }
+
 		};
 
 		public static int OneRoundAOE(List<string> AICards, List<Card> combo, string comboClass)
 		{
+			if (!CARDCLASS.ContainsKey(comboClass))
+				return -1;
 			var game = new Game(new GameConfig
 			{
 				StartPlayer = 1,
@@ -52,40 +52,37 @@ namespace SabberStoneCoreConsole.src
 			game.Player2.BaseMana = 10;
 			game.StartGame();
 
-			foreach(string cardname in AICards)
+			foreach(string cardname in AICards)//draw all cards due to mana cost limit to 10/round
 			{
-				Console.WriteLine(cardname);
+				//Console.WriteLine(cardname);
 				game.Process(PlayCardTask.Any(game.CurrentPlayer,Entity.FromCard(game.CurrentPlayer, Cards.FromName(cardname), zone: game.CurrentPlayer.HandZone)));
 
-				game.Process(EndTurnTask.Any(game.CurrentPlayer));
-				game.Process(EndTurnTask.Any(game.CurrentPlayer));
+				game.Process(EndTurnTask.Any(game.CurrentPlayer));//end round switch to our side
+				game.Process(EndTurnTask.Any(game.CurrentPlayer));//end round skip our side, back to opponent
 			}
-			game.Process(EndTurnTask.Any(game.CurrentPlayer));
+			game.Process(EndTurnTask.Any(game.CurrentPlayer));//end round switch to our side
 
-			if (combo[0].Type.ToString() != "MINION")//minion card first
-			{
+			if (combo[0].Type.ToString() != "MINION")//minion card use first
 				combo.Reverse();
-			}
-			foreach(Card card in combo)
+			
+			foreach(Card card in combo)//use card one by one
 			{
 				if(card.Type.ToString() != "MINION")
 				{
-					
 					IPlayable SpellTest = Generic.DrawCard(game.CurrentPlayer, card);
 					game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest, game.CurrentOpponent.BoardZone[0]));
 				}
-				else
+				else //spell or weapon
 				{
 					game.Process(PlayCardTask.Any(game.CurrentPlayer, Entity.FromCard(game.CurrentPlayer, card, zone: game.CurrentPlayer.HandZone)));
-
+				
 				}
 			}
-			game.Process(EndTurnTask.Any(game.CurrentPlayer));
+	
 
-			
-			Program.ShowLog(game, LogLevel.VERBOSE);
+			/*Program.ShowLog(game, LogLevel.VERBOSE);
 			Console.WriteLine(game.CurrentOpponent.BoardZone.FullPrint());
-			Console.WriteLine(game.CurrentPlayer.BoardZone.FullPrint());
+			Console.WriteLine(game.CurrentPlayer.BoardZone.FullPrint());*/
 
 			int health = game.CurrentOpponent.BoardZone.Health();
 			return health;
@@ -93,6 +90,8 @@ namespace SabberStoneCoreConsole.src
 
 		public static int OneRoundRemove(string AICard, List<Card> combo, string comboClass)
 		{
+			if (!CARDCLASS.ContainsKey(comboClass))
+				return -1;
 			var game = new Game(new GameConfig
 			{
 				StartPlayer = 1,
@@ -118,27 +117,27 @@ namespace SabberStoneCoreConsole.src
 
 
 			//AI player
-			var MinionAI = (ICharacter)Generic.DrawCard(game.CurrentPlayer, Cards.FromName(AICard));
-			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionAI));
-			game.Process(EndTurnTask.Any(game.CurrentPlayer));
+			var MinionAI = (ICharacter)Generic.DrawCard(game.CurrentPlayer, Cards.FromName(AICard));//generate opponent minion
+			game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionAI));//use
+			game.Process(EndTurnTask.Any(game.CurrentPlayer));//end round switch to our side
 
 			//Test case
-			foreach (Card testCard in combo)
+			foreach (Card testCard in combo) //use combo card one by one
 			{
 				if (testCard.Type.ToString() == "MINION")
 				{
-					var MinionTest = (ICharacter)Generic.DrawCard(game.CurrentPlayer, testCard);
-					game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionTest));
+					var MinionTest = (ICharacter)Generic.DrawCard(game.CurrentPlayer, testCard);//draw
+					game.Process(PlayCardTask.Minion(game.CurrentPlayer, MinionTest));//use
 				}
-				else
+				else//spell or weapon
 				{
-					IPlayable SpellTest = Generic.DrawCard(game.CurrentPlayer, testCard);
-					game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest, MinionAI));
+					IPlayable SpellTest = Generic.DrawCard(game.CurrentPlayer, testCard);//draw
+					game.Process(PlayCardTask.SpellTarget(game.CurrentPlayer, SpellTest, MinionAI));//use taget to opponet minion
 				}
 			}
-			//ShowLog(game, LogLevel.VERBOSE);
-			//Console.WriteLine(game.CurrentOpponent.BoardZone.FullPrint());
-			//Console.WriteLine(game.CurrentPlayer.BoardZone.FullPrint());
+			/*Program.ShowLog(game, LogLevel.VERBOSE);
+			Console.WriteLine(game.CurrentOpponent.BoardZone.FullPrint());
+			Console.WriteLine(game.CurrentPlayer.BoardZone.FullPrint());*/
 
 			int health = game.CurrentOpponent.BoardZone.Health();
 			return health;
@@ -188,10 +187,10 @@ namespace SabberStoneCoreConsole.src
 			return TotalScore;
 
 		}
-		public static int TestHQ(List<Card> combo, string comboClass)
+		/*public static int TestHQ(List<Card> combo, string comboClass)
 		{
 			//TODO:
 			return -1;
-		}
+		}*/
 	}
 }

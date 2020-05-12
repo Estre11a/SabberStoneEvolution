@@ -45,6 +45,8 @@ namespace SabberStoneCoreConsole.src
 					}
 					HashSet<string> tagSet = new HashSet<string>();
 					List<string> tagList = new List<string>();
+
+
 					Card cardFromRead = Cards.FromName(item.name);
 					if ((String.Compare(item.type, "MINION") == 0) && (item.attack + item.health) > 10)
 					{
@@ -54,13 +56,14 @@ namespace SabberStoneCoreConsole.src
 					{
 						continue;
 					}
-
+		
 					tagList = getTags(cardFromRead.Text);
 
 					foreach (string tag in tagList)
 					{
 						tagSet.Add(tag);
 					}
+					
 
 					cardContainer.Add(new SingleCard(tagSet, cardFromRead));
 					

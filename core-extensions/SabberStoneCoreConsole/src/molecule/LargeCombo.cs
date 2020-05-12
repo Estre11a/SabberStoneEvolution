@@ -7,10 +7,15 @@ namespace SabberStoneCoreConsole.src
 {
 	public class LargeCombo
 	{
+		public List<Card> ComboCards { get; }
 		public string ComboClass { get; }
 		public Dictionary<string, int> Tags { get; set; }
+
 		public int Cost { get; set; }
-		public List<Card> ComboCards { get; }
+
+		public int RMScore { get; }
+		public int AOEScore { get; }
+		public int HQScore { get; }
 
 		/*public LargeCombo()
 		{
@@ -21,15 +26,14 @@ namespace SabberStoneCoreConsole.src
 			Cost = 0;
 			ComboCards = new List<Card>();
 		}*/
-		public LargeCombo(SingleCard cardInfo)
+		public LargeCombo(SingleCard singleCard)
 		{
-			
-			ComboClass = cardInfo.card.Class.ToString();
+			ComboClass = singleCard.card.Class.ToString();
 			Tags = new Dictionary<string, int>();
 			Tags.Add("AOE", 0);
 			Tags.Add("Remove", 0);
 			Tags.Add("High Quality", 0);
-			foreach (string tag in cardInfo.tags)
+			foreach (string tag in singleCard.Tags)
 			{
 				if (Tags.ContainsKey(tag))
 				{
@@ -37,20 +41,23 @@ namespace SabberStoneCoreConsole.src
 				}
 			}
 
-			Cost = cardInfo.card.Cost;
+			Cost = singleCard.card.Cost;
 
 			ComboCards = new List<Card>();
-			ComboCards.Add(cardInfo.card);
+			ComboCards.Add(singleCard.card);
+			RMScore = singleCard.RMScore;
+			AOEScore = singleCard.AOEScore;
+			HQScore = singleCard.HQScore;
 		}
 
-		public LargeCombo(SmallCombo cardCombo)
+		public LargeCombo(SmallCombo smallCombo)
 		{
-			ComboClass = cardCombo.ComboClass;
+			ComboClass = smallCombo.ComboClass;
 			Tags = new Dictionary<string, int>();
 			Tags.Add("AOE", 0);
 			Tags.Add("Remove", 0);
 			Tags.Add("High Quality", 0);
-			foreach (string tag in cardCombo.Tags)
+			foreach (string tag in smallCombo.Tags)
 			{
 				if (Tags.ContainsKey(tag))
 				{
@@ -58,9 +65,12 @@ namespace SabberStoneCoreConsole.src
 				}
 			}
 
-			Cost = cardCombo.Cost;
+			Cost = smallCombo.Cost;
 
-			ComboCards = new List<Card>(cardCombo.ComboCards);
+			ComboCards = new List<Card>(smallCombo.ComboCards);
+			RMScore = smallCombo.RMScore;
+			AOEScore = smallCombo.AOEScore;
+			HQScore = smallCombo.HQScore;
 		}
 
 		public LargeCombo(LargeCombo large1, LargeCombo large2)
@@ -89,6 +99,10 @@ namespace SabberStoneCoreConsole.src
 
 			Cost = large1.Cost + large2.Cost;
 			ComboCards = large1.ComboCards.Concat(large2.ComboCards).ToList();
+
+			RMScore = (large1.RMScore + large2.RMScore);
+			AOEScore = (large1.AOEScore + large2.AOEScore);
+			HQScore = (large1.HQScore + large2.HQScore);
 		}
 	}
 }

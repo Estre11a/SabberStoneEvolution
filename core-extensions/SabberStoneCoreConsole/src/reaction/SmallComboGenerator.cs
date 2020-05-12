@@ -11,8 +11,6 @@ namespace SabberStoneCoreConsole.src
 		static int CountLimit = 200;
 		static Random rand = new Random();
 
-	
-
 		public static HashSet<SmallCombo> RandomComboGenerator(List<SingleCard> CardWithtag)
 		{
 			HashSet<SmallCombo> result = new HashSet<SmallCombo>();
@@ -54,17 +52,17 @@ namespace SabberStoneCoreConsole.src
 				&& card1.card.Class != card1.card.Class)
 				return false;
 			// Rule 1 : has same tag
-			HashSet<string> intersect = new HashSet<string>(card1.tags);
-			intersect.IntersectWith(card2.tags);
+			HashSet<string> intersect = new HashSet<string>(card1.Tags);
+			intersect.IntersectWith(card2.Tags);
 			if (intersect.Count > 0)
 				return true;
 			// Rule 2 : charge + buff (= Remove)
-			if ((card1.tags.Contains("Charge") && card2.tags.Contains("Buff"))
-				|| (card1.tags.Contains("Buff") && card2.tags.Contains("Charge")))
+			if ((card1.Tags.Contains("Charge") && card2.Tags.Contains("Buff"))
+				|| (card1.Tags.Contains("Buff") && card2.Tags.Contains("Charge")))
 				return true;
 			// Rule 3 : AOE + Taunt
-			if ((card1.tags.Contains("AOE") && card2.tags.Contains("Taunt"))
-				|| (card1.tags.Contains("Taunt") && card2.tags.Contains("AOE")))
+			if ((card1.Tags.Contains("AOE") && card2.Tags.Contains("Taunt"))
+				|| (card1.Tags.Contains("Taunt") && card2.Tags.Contains("AOE")))
 				return true;
 
 			return false;
@@ -79,8 +77,13 @@ namespace SabberStoneCoreConsole.src
 				foreach (SmallCombo combo in comboTemp)
 				{
 					//Console.WriteLine(combo.Score);
-					if (combo.Score > 0 && combo.Score < 15)
+					if (combo.RMScore >= 0 && combo.RMScore < 15)
 						result.Add(combo);
+					else if (combo.Tags.Contains("AOE") && combo.AOEScore < 80)
+						result.Add(combo);
+					else if (combo.Tags.Contains("High Quality") && combo.HQScore > 8)
+						result.Add(combo);
+
 				}
 			}
 			return result;

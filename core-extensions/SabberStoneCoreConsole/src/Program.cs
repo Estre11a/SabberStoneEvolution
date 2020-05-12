@@ -73,24 +73,30 @@ namespace SabberStoneCoreConsole
 			*/
 
 
-			Console.WriteLine(UnitTest.TestAOE(new List<Card> {Cards.FromName("Kobold Geomancer"), Cards.FromName("Swipe") }, "DRUID"));
-			/*Console.WriteLine("start read");
+			
+			Console.WriteLine("start read");
 			List<SingleCard> list = Read.read();
+			
 			HashSet<SmallCombo> small = SmallComboGenerator.Evo(list);
+			/*foreach(SmallCombo sc in small)
+			{
+				sc.output();
+			}
+			Console.WriteLine(small.Count);*/
 			LargeCombo Deck = LargeComboGenerator.DeckBuilding(list, small);
 
 			// Use this line to get two Decks
-			LargeCombo[] DeckArray = LargeComboGenerator.DeckBuildingBinary(list, small);
+			//LargeCombo[] DeckArray = LargeComboGenerator.DeckBuildingBinary(list, small);
 
 			// Then use this line to update the weights
-			DynamicVectorCalculator.UpdateWeight(winCountLow, winCountHigh);
+			//DynamicVectorCalculator.UpdateWeight(winCountLow, winCountHigh);
 
 			foreach (Card card in Deck.ComboCards)
 				Console.Write(card.Name + ", ");
 			Console.WriteLine();
 			Console.WriteLine(Deck.ComboCards.Count);
 			WriteToTML.Write(Deck);
-			*/
+			
 
 			
 			//SabberStoneCoreConsole.PowerHistoryTest.EqualTest();
