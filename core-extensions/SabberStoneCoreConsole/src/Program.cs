@@ -76,7 +76,8 @@ namespace SabberStoneCoreConsole
 			
 			Console.WriteLine("start read");
 			List<SingleCard> list = Read.read();
-			
+
+				
 			HashSet<SmallCombo> small = SmallComboGenerator.Evo(list);
 			/*foreach(SmallCombo sc in small)
 			{
@@ -91,14 +92,17 @@ namespace SabberStoneCoreConsole
 			// Then use this line to update the weights
 			//DynamicVectorCalculator.UpdateWeight(winCountLow, winCountHigh);
 
-			foreach (Card card in Deck.ComboCards)
-				Console.Write(card.Name +"("+ card.Class.ToString()+ "), ");
-			Console.WriteLine();
-			Console.WriteLine("AOE:"+Deck.AOEScore);
-			Console.WriteLine("HQ:" + Deck.HQScore);
-			Console.WriteLine("RM:" + Deck.RMScore);
 
-			WriteToTML.Write(Deck);
+			foreach (Card card in Deck.ComboCards)
+				Console.Write(card.Name + "(" + card.Class.ToString() + "), ");
+				Console.WriteLine();
+				Console.WriteLine("AOE:" + Deck.AOEScore);
+				Console.WriteLine("HQ:" + Deck.HQScore);
+				Console.WriteLine("RM:" + Deck.RMScore);
+
+				WriteToTML.Write(Deck);
+		
+
 			
 
 			

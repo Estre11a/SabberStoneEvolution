@@ -27,7 +27,7 @@ namespace SabberStoneCoreConsole.src
 
 		public static List<SingleCard> read()
 		{
-			using (StreamReader r = new StreamReader("/Users/hc/Desktop/cards.collectible.json"))
+			using (StreamReader r = new StreamReader(@"C:\Users\weizsw\Desktop\SabberStone\Preprocessing\cards.collectible.json"))
 			{
 				string json = r.ReadToEnd();
 				List<CardPool> items = JsonConvert.DeserializeObject<List<CardPool>>(json);

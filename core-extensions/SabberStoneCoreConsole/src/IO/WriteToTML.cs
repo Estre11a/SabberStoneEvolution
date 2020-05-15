@@ -11,11 +11,11 @@ namespace SabberStoneCoreConsole.src
 	{
 		public static void Write(LargeCombo cardList)
 		{
-			StreamWriter sw = new StreamWriter("/Users/hc/Desktop/Evostone-master/TestBed/StrategySearch/resources/decks/pools/metaDecks.tml");
+			StreamWriter sw = new StreamWriter(@"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\resources\decks\pools\metaDecks.tml");
 			Console.WriteLine("Writing............");
 			sw.WriteLine("PoolName = \"Meta Decks\"");
 			sw.WriteLine("[[Decks]]");
-			sw.WriteLine("DeckName = \"Tempo Rogue\"");
+			sw.WriteLine("DeckName = \"test\"");
 			string className = cardList.ComboClass.ToLower();
 			sw.WriteLine("ClassName = \"" + Char.ToUpper(className[0])+ className.Substring(1) + "\"");
 
@@ -31,6 +31,31 @@ namespace SabberStoneCoreConsole.src
 
 			sw.Flush();
 			sw.Close();
+
+			using (StreamWriter wr = File.AppendText(@"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\weight.txt"))
+			{
+				
+				//sw.WriteLine("PoolName = \"Meta Decks\"");
+				//wr.WriteLine("[[Decks]]");
+				//wr.WriteLine("DeckName = \"test" + "\"");
+				string newclassName = cardList.ComboClass.ToLower();
+				wr.WriteLine("ClassName =" + Char.ToUpper(newclassName[0]) + newclassName.Substring(1));
+
+				wr.Write("CardList =");
+				int j = 0;
+				while (j < 29)
+				{
+					wr.Write(cardList.ComboCards[j].Name + ",");
+					j++;
+				}
+				wr.Write(cardList.ComboCards[29].Name);
+				//wr.Write("]");
+				wr.WriteLine("\n");
+				wr.Write("win = ");
+				wr.Flush();
+				wr.Close();
+			}
+
 
 		}
 	}

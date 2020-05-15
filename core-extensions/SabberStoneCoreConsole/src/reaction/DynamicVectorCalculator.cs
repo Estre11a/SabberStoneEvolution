@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using SabberStoneCore.Model;
 
@@ -209,20 +210,29 @@ namespace SabberStoneCoreConsole.src
 			Random random = new Random();
 			if (!inited)
 			{
-				wCost = random.NextDouble();
-				wAOE = random.NextDouble();
-				wHQ = random.NextDouble();
-				wRemove = random.NextDouble();
+			wCost = random.NextDouble();
+			wAOE = random.NextDouble();
+			wHQ = random.NextDouble();
+			wRemove = random.NextDouble();
+			Console.WriteLine("Writing......weights");
+			Console.WriteLine(wCost + ", " + wAOE + ", " + wHQ + ", " + wRemove);
+			using (StreamWriter sw = File.AppendText(@"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\weight.txt"))
+			{
+					sw.WriteLine();
+					sw.WriteLine("weight =" + wCost + "," + wAOE + "," +  wHQ + "," + wRemove);
+					sw.Flush();
+					sw.Close();
+			}
+			
+			wCostL = random.NextDouble()/2;
+			wAOEL = random.NextDouble()/2;
+			wHQL = random.NextDouble()/2;
+			wRemoveL = random.NextDouble()/2;
 
-				wCostL = random.NextDouble()/2;
-				wAOEL = random.NextDouble()/2;
-				wHQL = random.NextDouble()/2;
-				wRemoveL = random.NextDouble()/2;
-
-				wCostH = random.NextDouble()/2 + 0.5;
-				wAOEH = random.NextDouble()/2 + 0.5;
-				wHQH = random.NextDouble()/2 + 0.5;
-				wRemoveH = random.NextDouble()/2 + 0.5;
+			wCostH = random.NextDouble()/2 + 0.5;
+			wAOEH = random.NextDouble()/2 + 0.5;
+			wHQH = random.NextDouble()/2 + 0.5;
+			wRemoveH = random.NextDouble()/2 + 0.5;
 
 				inited = true;
 			}
@@ -239,6 +249,7 @@ namespace SabberStoneCoreConsole.src
 				wAOE = random.NextDouble();
 				wHQ = random.NextDouble();
 				wRemove = random.NextDouble();
+				
 
 				wCostL = random.NextDouble() / 2;
 				wAOEL = random.NextDouble() / 2;
