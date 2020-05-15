@@ -35,11 +35,11 @@ namespace SabberStoneCoreConsole.src
 				return false;
 			if (HasIllegalDuplicate(large1, large2))
 				return false;
-			//double p = new DynamicVectorCalculator().RandomWeightCalcualte(large1, large2);
-			double p = new DynamicVectorCalculator().Calculate(large1, large2);
+			double p = new DynamicVectorCalculator().RandomWeightCalcualte(large1, large2);
+			//double p = new DynamicVectorCalculator().Calculate(large1, large2);
 			if (rand.NextDouble() > p)
 			{
-				Console.WriteLine("ref, p = " + p.ToString());
+				//Console.WriteLine("ref, p = " + p.ToString());
 				return false;
 			}
 			return true;
