@@ -9,7 +9,6 @@ namespace SabberStoneCoreConsole.src
 {
 	static class WriteToTML
 	{
-		
 		public static void Write(LargeCombo cardList)
 		{
 			StreamWriter sw = new StreamWriter("/Users/hc/Desktop/Evostone-master/TestBed/StrategySearch/resources/decks/pools/metaDecks.tml");
@@ -33,12 +32,6 @@ namespace SabberStoneCoreConsole.src
 			sw.Flush();
 			sw.Close();
 
-		}
-
-		public static void WriteDecks(List<LargeCombo> Decks)
-		{
-			//!!TODO:
-			Console.WriteLine("write WriteDecks in IO/WriteTOTML.cs");
 		}
 	}
 }

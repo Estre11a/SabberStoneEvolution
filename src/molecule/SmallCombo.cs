@@ -28,10 +28,10 @@ namespace SabberStoneCoreConsole.src
 			if (card2.card.Class.ToString() != "NEUTRAL")
 				ComboClass = card2.card.Class.ToString();
 
-			Cost = 0;
-			RMScore = 0;
-			HQScore = 0;
-			AOEScore = 0;
+			Cost = -1;
+			RMScore = -1;
+			HQScore = -1;
+			AOEScore = -1;
 			if (card1 != null && card2 != null)
 			{
 				Cost = card1.card.Cost + card2.card.Cost;

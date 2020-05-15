@@ -5,7 +5,7 @@ namespace SabberStoneCoreConsole.src.Evolution
 {
 	public class Evolution
 	{
-		public List<DNA> population;
+		DNA[] population;
 		List<DNA> matingPool;
 
 		double mutationRate = 0.25;
@@ -13,22 +13,17 @@ namespace SabberStoneCoreConsole.src.Evolution
 		int totalPopulation = 100;
 		int parentPopulation = 50;
 
-		//initialize
-		
-		public Evolution(List<DNA> population)
+		public Evolution() //initialize in first round
 		{
-			if (population == null)
-				this.population = new List<DNA>();
-			else
-				this.population = population;
+			population = new DNA[totalPopulation];
+			for(int i = 0; i < totalPopulation; i++)
+				population[i] = new DNA();
 
-			//if population < totalPopulation -> randomly generate rest
-			//first round population is 0, so all population are randomly generated
-			for (int i = population.Count; i < totalPopulation; i++)
-			{
-				this.population.Add(new DNA());
-			}
-
+			matingPool = new List<DNA>();
+		}
+		public Evolution(DNA[] population)
+		{
+			this.population = population;
 			matingPool = new List<DNA>();
 		}
 
@@ -37,14 +32,13 @@ namespace SabberStoneCoreConsole.src.Evolution
 			//build mating pool
 			//sort population by win rate
 			//select top parent population to be parent
-			population.Sort();
+			Array.Sort(population);
 			for(int i = 0; i < parentPopulation; i++)
 			{
 				matingPool.Add(population[i]);
 			}
 			//reproduction
-			population.Clear();
-			for (int i = 0; i < population.Count; i++)
+			for (int i = 0; i < population.Length; i++)
 			{
 				//select parent randomly
 				DNA partnerA = matingPool[rand.Next(matingPool.Count)];
@@ -54,7 +48,7 @@ namespace SabberStoneCoreConsole.src.Evolution
 				//Mutation
 				child.mutate(mutationRate);
 				//overwriting the population with the new children
-				population.Add(child);
+				population[i] = child;
 			}
 		}
 	}

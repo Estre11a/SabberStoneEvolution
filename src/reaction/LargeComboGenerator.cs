@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using SabberStoneCore.Model;
-using SabberStoneCoreConsole.src.Evolution;
 
 namespace SabberStoneCoreConsole.src
 {
@@ -27,7 +26,7 @@ namespace SabberStoneCoreConsole.src
 			return Container;
 		}
 
-		public static bool CheckMerge(LargeCombo large1, LargeCombo large2, DNA dna)
+		public static bool CheckMerge(LargeCombo large1, LargeCombo large2)
 		{
 			if (large1.ComboCards.Count + large2.ComboCards.Count > 30)
 				return false;
@@ -36,10 +35,30 @@ namespace SabberStoneCoreConsole.src
 				return false;
 			if (HasIllegalDuplicate(large1, large2))
 				return false;
-			double p = new DynamicVectorCalculator().CalculateByEvolution(large1, large2, dna);
+			double p = new DynamicVectorCalculator().RandomWeightCalcualte(large1, large2);
+			//double p = new DynamicVectorCalculator().Calculate(large1, large2);
 			if (rand.NextDouble() > p)
 			{
 				//Console.WriteLine("ref, p = " + p.ToString());
+				return false;
+			}
+			return true;
+		}
+
+		public static bool CheckMerge(LargeCombo large1, LargeCombo large2, int flag)
+		{
+			if (large1.ComboCards.Count + large2.ComboCards.Count > 30)
+				return false;
+			if (large1.ComboClass != "NEUTRAL" && large2.ComboClass != "NEUTRAL"
+				&& large1.ComboClass != large2.ComboClass)
+				return false;
+			if (HasIllegalDuplicate(large1, large2))
+				return false;
+			double p = new DynamicVectorCalculator().RandomWeightCalcualte(large1, large2, flag);
+			////????
+			if (rand.NextDouble() > p)
+			{
+				Console.WriteLine("ref, p = " + p.ToString());
 				return false;
 			}
 			return true;
@@ -69,11 +88,11 @@ namespace SabberStoneCoreConsole.src
 			return false;
 		}
 
-		public static void randomCombine(DNA dna)
+		public static void randomCombine()
 		{
 			int index1 = rand.Next(Container.Count), index2 = rand.Next(Container.Count);
 			LargeCombo large1 = Container[index1], large2 = Container[index2];
-			if (CheckMerge(large1, large2, dna))
+			if (CheckMerge(large1, large2))
 			{
 				LargeCombo merged = new LargeCombo(large1, large2);
 				if (merged.ComboCards.Count == 30)
@@ -85,16 +104,47 @@ namespace SabberStoneCoreConsole.src
 			}	
 		}
 
-
-		public static LargeCombo DeckBuilding(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet, DNA dna)
+		public static void randomCombine(int flag)
 		{
-			InitToLarge(CardWithTag, ComboSet);
-			while (Deck == null)
-				randomCombine(dna);
-			return Deck;
+			int index1 = rand.Next(Container.Count), index2 = rand.Next(Container.Count);
+			LargeCombo large1 = Container[index1], large2 = Container[index2];
+			if (CheckMerge(large1, large2, flag))
+			{
+				LargeCombo merged = new LargeCombo(large1, large2);
+				if (merged.ComboCards.Count == 30)
+				{
+					Deck = merged;
+					return;
+				}
+				Container.Add(merged);
+			}
 		}
 
 
-		
+		public static LargeCombo DeckBuilding(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet)
+		{
+			InitToLarge(CardWithTag, ComboSet);
+			LargeCombo[] DeckArray;
+			while (Deck == null)
+				randomCombine();
+			return Deck;
+
+		}
+
+		public static LargeCombo[] DeckBuildingBinary(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet)
+		{
+			InitToLarge(CardWithTag, ComboSet);
+			Deck = null;
+			while (Deck == null)
+				randomCombine(0);
+			DeckArray[0] = Deck;
+			Deck = null;
+			while (Deck == null)
+				randomCombine(1);
+			DeckArray[1] = Deck;
+			Deck = null;
+			return DeckArray;
+		}
+
 	}
 }

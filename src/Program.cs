@@ -76,7 +76,6 @@ namespace SabberStoneCoreConsole
 
 			//read single cards
 			Console.WriteLine("start read");
-
 			List<SingleCard> list = Read.ReadCardsFromJson();
 
 			//generate small combo
@@ -90,6 +89,7 @@ namespace SabberStoneCoreConsole
 			Evolution evolution = new Evolution(dnas);
 			//evolution: parent -> children
 			evolution.Draw(); 
+
 
 			//use children DNA weights to build deck
 			List<LargeCombo> Decks = new List<LargeCombo>();

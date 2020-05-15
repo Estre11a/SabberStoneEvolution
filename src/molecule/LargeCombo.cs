@@ -104,15 +104,5 @@ namespace SabberStoneCoreConsole.src
 			AOEScore = (large1.AOEScore + large2.AOEScore);
 			HQScore = (large1.HQScore + large2.HQScore);
 		}
-		public void output()
-		{
-			foreach (Card card in ComboCards)
-				Console.Write(card.Name + "(" + card.Class.ToString() + "), ");
-			Console.WriteLine();
-			Console.WriteLine("AOE:" + AOEScore);
-			Console.WriteLine("HQ:" + HQScore);
-			Console.WriteLine("RM:" + RMScore);
-		}
-
 	}
 }
