@@ -30,6 +30,7 @@ using SabberStoneBasicAI.Score;
 using SabberStoneBasicAI.Nodes;
 using Newtonsoft.Json;
 using SabberStoneCoreConsole.src;
+using SabberStoneCoreConsole.src.Evolution;
 
 namespace SabberStoneCoreConsole
 {
@@ -73,25 +74,42 @@ namespace SabberStoneCoreConsole
 			*/
 
 
-			
+			//read single cards
 			Console.WriteLine("start read");
+<<<<<<< HEAD
 			List<SingleCard> list = Read.read();
 
 				
+=======
+			List<SingleCard> list = Read.ReadCardsFromJson();
+
+			//generate small combo
+>>>>>>> d7d7c747f7f04e9168ea0157aa3df7c1633c3b9f
 			HashSet<SmallCombo> small = SmallComboGenerator.Evo(list);
-			/*foreach(SmallCombo sc in small)
+
+
+			//evolution
+			//!!!TODO: Write the ReadWeightFile method in IO/Read.cs
+			List<DNA> dnas = Read.ReadWeightFile();
+
+			Evolution evolution = new Evolution(dnas);
+			//evolution: parent -> children
+			evolution.Draw(); 
+
+
+			//use children DNA weights to build deck
+			List<LargeCombo> Decks = new List<LargeCombo>();
+			foreach(DNA dna in evolution.population)
 			{
-				sc.output();
+				LargeCombo Deck = LargeComboGenerator.DeckBuilding(list, small, dna);
+				Deck.output();
+				Decks.Add(Deck);
 			}
-			Console.WriteLine(small.Count);*/
-			LargeCombo Deck = LargeComboGenerator.DeckBuilding(list, small);
 
-			// Use this line to get two Decks
-			//LargeCombo[] DeckArray = LargeComboGenerator.DeckBuildingBinary(list, small);
+			//!!!TODO: Write the WriteDecks method in order to write all Desks in one generation
+			WriteToTML.WriteDecks(Decks);
 
-			// Then use this line to update the weights
-			//DynamicVectorCalculator.UpdateWeight(winCountLow, winCountHigh);
-
+<<<<<<< HEAD
 
 			foreach (Card card in Deck.ComboCards)
 				Console.Write(card.Name + "(" + card.Class.ToString() + "), ");
@@ -104,8 +122,10 @@ namespace SabberStoneCoreConsole
 		
 
 			
+=======
 
-			
+>>>>>>> d7d7c747f7f04e9168ea0157aa3df7c1633c3b9f
+
 			//SabberStoneCoreConsole.PowerHistoryTest.EqualTest();
 			//SabberStoneCoreConsole.PowerHistoryTest.Run();
 

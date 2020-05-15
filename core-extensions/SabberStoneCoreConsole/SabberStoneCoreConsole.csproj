@@ -20,6 +20,7 @@
     <Folder Include="src\molecule\" />
     <Folder Include="src\reaction\" />
     <Folder Include="src\IO\" />
+    <Folder Include="src\Evolution\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="src\GenerateCombo.cs" />

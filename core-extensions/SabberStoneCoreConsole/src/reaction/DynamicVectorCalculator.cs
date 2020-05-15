@@ -218,8 +218,13 @@ namespace SabberStoneCoreConsole.src
 			Console.WriteLine(wCost + ", " + wAOE + ", " + wHQ + ", " + wRemove);
 			using (StreamWriter sw = File.AppendText(@"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\weight.txt"))
 			{
+<<<<<<< HEAD
 					sw.WriteLine();
 					sw.WriteLine("weight =" + wCost + "," + wAOE + "," +  wHQ + "," + wRemove);
+=======
+					sw.WriteLine("wCost = " + wCost + ", " + "wAoe = " + wAOE + ", " + "wHQ = " + wHQ + ", " + "wRemove = " + wRemove);
+					sw.WriteLine("\n");
+>>>>>>> d7d7c747f7f04e9168ea0157aa3df7c1633c3b9f
 					sw.Flush();
 					sw.Close();
 			}
