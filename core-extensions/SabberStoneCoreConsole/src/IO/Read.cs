@@ -35,7 +35,7 @@ namespace SabberStoneCoreConsole.src
 
 		public static List<SingleCard> ReadCardsFromJson()
 		{
-			using (StreamReader r = new StreamReader("/Users/hc/Desktop/cards.collectible.json"))
+			using (StreamReader r = new StreamReader(@"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\SabberStone\cards.collectible.json"))
 			{
 				string json = r.ReadToEnd();
 				List<CardPool> items = JsonConvert.DeserializeObject<List<CardPool>>(json);

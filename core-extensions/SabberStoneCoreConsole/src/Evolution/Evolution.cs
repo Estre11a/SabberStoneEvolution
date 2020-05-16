@@ -15,12 +15,14 @@ namespace SabberStoneCoreConsole.src.Evolution
 
 		//initialize
 		
-		public Evolution(List<DNA> population)
+		public Evolution(List<DNA> pop)
 		{
-			if (population == null)
-				this.population = new List<DNA>();
-			else
-				this.population = population;
+
+			this.population = new List<DNA>();
+			if (pop != null)
+			{
+				this.population.AddRange(pop);
+			}
 
 			//if population < totalPopulation -> randomly generate rest
 			//first round population is 0, so all population are randomly generated
@@ -43,7 +45,8 @@ namespace SabberStoneCoreConsole.src.Evolution
 				matingPool.Add(population[i]);
 			}
 			//reproduction
-			population.Clear();
+			List<DNA> children = new List<DNA>();
+
 			for (int i = 0; i < population.Count; i++)
 			{
 				//select parent randomly
@@ -54,8 +57,11 @@ namespace SabberStoneCoreConsole.src.Evolution
 				//Mutation
 				child.mutate(mutationRate);
 				//overwriting the population with the new children
-				population.Add(child);
+				children.Add(child);
 			}
+
+			population = children;
+		
 		}
 	}
 }

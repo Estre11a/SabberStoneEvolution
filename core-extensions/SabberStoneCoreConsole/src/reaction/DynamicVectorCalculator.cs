@@ -22,6 +22,7 @@ namespace SabberStoneCoreConsole.src
 			wHQ = dna.weights[DNA.HQW];
 			wCost = dna.weights[DNA.CW];
 
+
 			int count = large1.ComboCards.Count + large2.ComboCards.Count;
 			double vecCost = (large1.Cost + large2.Cost) / count;
 			double vecAOE = (large1.AOEScore + large2.AOEScore) / count;

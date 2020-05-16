@@ -5,15 +5,15 @@ using SabberStoneCoreConsole.src.Evolution;
 
 namespace SabberStoneCoreConsole.src
 {
-	public static class LargeComboGenerator
+	public class LargeComboGenerator
 	{
-		public static List<LargeCombo> Container = new List<LargeCombo>();
-		static LargeCombo Deck = null;
-		static Random rand = new Random();
-		static LargeCombo[] DeckArray = new LargeCombo[2];
+		public List<LargeCombo> Container = new List<LargeCombo>();
+		LargeCombo Deck = null;
+		Random rand = new Random();
+		LargeCombo[] DeckArray = new LargeCombo[2];
 
 
-		public static List<LargeCombo> InitToLarge(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet)
+		public List<LargeCombo> InitToLarge(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet)
 		{
 			
 			foreach(SingleCard singleCard in CardWithTag)
@@ -27,7 +27,7 @@ namespace SabberStoneCoreConsole.src
 			return Container;
 		}
 
-		public static bool CheckMerge(LargeCombo large1, LargeCombo large2, DNA dna)
+		public bool CheckMerge(LargeCombo large1, LargeCombo large2, DNA dna)
 		{
 			if (large1.ComboCards.Count + large2.ComboCards.Count > 30)
 				return false;
@@ -45,7 +45,7 @@ namespace SabberStoneCoreConsole.src
 			return true;
 		}
 
-		public static bool HasIllegalDuplicate(LargeCombo large1, LargeCombo large2)
+		public bool HasIllegalDuplicate(LargeCombo large1, LargeCombo large2)
 		{
 			Dictionary<string, int> countOfCard = new Dictionary<string, int>();
 			foreach(Card card in large1.ComboCards)
@@ -69,7 +69,7 @@ namespace SabberStoneCoreConsole.src
 			return false;
 		}
 
-		public static void randomCombine(DNA dna)
+		public void randomCombine(DNA dna)
 		{
 			int index1 = rand.Next(Container.Count), index2 = rand.Next(Container.Count);
 			LargeCombo large1 = Container[index1], large2 = Container[index2];
@@ -86,7 +86,7 @@ namespace SabberStoneCoreConsole.src
 		}
 
 
-		public static LargeCombo DeckBuilding(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet, DNA dna)
+		public LargeCombo DeckBuilding(List<SingleCard> CardWithTag, HashSet<SmallCombo> ComboSet, DNA dna)
 		{
 			InitToLarge(CardWithTag, ComboSet);
 			while (Deck == null)
