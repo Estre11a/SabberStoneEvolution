@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 using SabberStoneCore.Model;
 using SabberStoneCoreConsole.src.Evolution;
@@ -29,8 +30,19 @@ namespace SabberStoneCoreConsole.src
 		public static List<DNA> ReadWeightFile()
 		{
 			//!!TODO:
-			Console.WriteLine("write read weight file in IO/Read.cs");
-			return null;
+			List<DNA> result = new List<DNA>();
+			string weightPath = "", winPath = "";
+			StreamReader srweight = new StreamReader(weightPath, Encoding.Default);
+			StreamReader srwin = new StreamReader(winPath, Encoding.Default);
+			string lineWeight, lineWin;
+
+			while ((lineWeight = srweight.ReadLine()) != null && (lineWin = srwin.ReadLine()) != null)
+			{
+				string[] weightSet = lineWeight.Split(",");
+				string[] winCount = lineWin.Split(",");
+				result.Add(new DNA(weightSet, winCount));
+			}
+			return result;
 		}
 
 		public static List<SingleCard> ReadCardsFromJson()
