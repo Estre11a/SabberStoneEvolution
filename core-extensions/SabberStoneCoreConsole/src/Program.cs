@@ -97,7 +97,7 @@ namespace SabberStoneCoreConsole
 			{
 				LargeCombo Deck = new LargeComboGenerator().DeckBuilding(list, small, dna);
 
-				using (StreamWriter sw = File.AppendText(@"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\weight.txt"))
+				using (StreamWriter sw = File.AppendText("/Users/weizsw/Downloads/Final Project/Evostone/TestBed/StrategySearch/weight.txt"))
 				{
 					sw.WriteLine(dna.weights[0] + "," + dna.weights[1] + "," + dna.weights[2] + "," + dna.weights[3]);
 					sw.Flush();
