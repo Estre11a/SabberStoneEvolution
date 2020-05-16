@@ -43,7 +43,7 @@ namespace SabberStoneCoreConsole.src
 			Console.WriteLine("Writing............");
 			foreach (LargeCombo cm in Decks)
 			{
-				StreamWriter sw = new StreamWriter("/Users/weizsw/Downloads/Final Project/Evostone/TestBed/StrategySearch/resources/decks/pools/tml/test" + nameCounter + ".tml");
+				StreamWriter sw = new StreamWriter(@"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\resources\decks\pools\tml\test" + nameCounter + ".tml");
 				sw.WriteLine("PoolName = \"Meta Decks\"");
 				sw.WriteLine("[[Decks]]");
 				sw.WriteLine("DeckName = \"test\"");

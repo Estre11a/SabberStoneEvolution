@@ -31,7 +31,7 @@ namespace SabberStoneCoreConsole.src
 		{
 			//!!TODO:
 			List<DNA> result = new List<DNA>();
-			string weightPath = "/Users/weizsw/Downloads/Final Project/Evostone/TestBed/StrategySearch/weight.txt", winPath = "/Users/weizsw/Downloads/Final Project/Evostone/TestBed/StrategySearch/winTotal.txt";
+			string weightPath = @"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\weight.txt", winPath = @"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\win.txt";
 			StreamReader srweight = new StreamReader(weightPath, Encoding.Default);
 			StreamReader srwin = new StreamReader(winPath, Encoding.Default);
 			string lineWeight, lineWin;
@@ -47,7 +47,7 @@ namespace SabberStoneCoreConsole.src
 
 		public static List<SingleCard> ReadCardsFromJson()
 		{
-			using (StreamReader r = new StreamReader("/Users/weizsw/Downloads/Final Project/SabberStone/cards.collectible.json"))
+			using (StreamReader r = new StreamReader(@"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\SabberStone\cards.collectible.json"))
 			{
 				string json = r.ReadToEnd();
 				List<CardPool> items = JsonConvert.DeserializeObject<List<CardPool>>(json);
