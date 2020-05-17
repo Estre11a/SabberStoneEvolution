@@ -32,7 +32,7 @@ namespace SabberStoneCoreConsole.src
 			double costPenalty = Math.Max(0, vecCost - 4.5) * wCost;
 			double vecP = ((vecAOE * wAOE + vecRemove * wRemove + vecHQ * wHQ) / (100 * (wRemove + wHQ + wAOE))) - costPenalty;
 
-			return Math.max(0.1, vecP);
+			return Math.Max(0.1, vecP);
 		}
 
 	}
