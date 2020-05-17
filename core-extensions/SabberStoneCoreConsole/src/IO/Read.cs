@@ -31,7 +31,7 @@ namespace SabberStoneCoreConsole.src
 		{
 			//!!TODO:
 			List<DNA> result = new List<DNA>();
-			string weightPath = @"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\weight.txt", winPath = @"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\win.txt";
+			string weightPath = @"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\weight.txt", winPath = @"C:\Users\weizsw\iCloudDrive\Documents\Ai for Games\EvoStone\TestBed\StrategySearch\winTotal.txt";
 			StreamReader srweight = new StreamReader(weightPath, Encoding.Default);
 			StreamReader srwin = new StreamReader(winPath, Encoding.Default);
 			string lineWeight, lineWin;

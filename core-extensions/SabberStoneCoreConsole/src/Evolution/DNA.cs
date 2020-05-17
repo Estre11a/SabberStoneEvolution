@@ -65,6 +65,9 @@ namespace SabberStoneCoreConsole.src.Evolution
 
 		public DNA(string[] weightSet, string[] winCount)
 		{
+			WinRate = new List<double>();			AVGWin = 0;			MAXWin = 0;
+			//input is empty, weight input error
+			if (weightSet[0] == "" || winCount[0] == "" || weightSet.Length != count)				return;
 			weights[AOEW] = Convert.ToDouble(weightSet[AOEW]);
 			weights[HQW] = Convert.ToDouble(weightSet[HQW]);
 			weights[RMW] = Convert.ToDouble(weightSet[RMW]);

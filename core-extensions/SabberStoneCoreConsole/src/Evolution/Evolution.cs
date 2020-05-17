@@ -10,8 +10,8 @@ namespace SabberStoneCoreConsole.src.Evolution
 
 		double mutationRate = 0.25;
 		Random rand = new Random();
-		int totalPopulation = 100;
-		int parentPopulation = 50;
+		int totalPopulation = 20;
+		int parentPopulation = 10;
 
 		//initialize
 		
