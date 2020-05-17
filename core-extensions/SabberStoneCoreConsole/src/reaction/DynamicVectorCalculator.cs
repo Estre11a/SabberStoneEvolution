@@ -27,10 +27,12 @@ namespace SabberStoneCoreConsole.src
 			double vecCost = (large1.Cost + large2.Cost) / count;
 			double vecAOE = (large1.AOEScore + large2.AOEScore) / count;
 			double vecRemove = (large1.RMScore + large2.RMScore) / count;
-			double vecHQ = (large2.HQScore + large2.HQScore) / count;
+			double vecHQ = (large1.HQScore + large2.HQScore) / count;
 
-			double vecP = (vecCost * wCost + vecAOE * wAOE + vecRemove * wRemove + vecHQ * wHQ) / (wRemove + wHQ + wAOE + wCost);
-			return vecP;
+			double costPenalty = Math.Max(0, vecCost - 4.5) * wCost;
+			double vecP = ((vecAOE * wAOE + vecRemove * wRemove + vecHQ * wHQ) / (100 * (wRemove + wHQ + wAOE))) - costPenalty;
+
+			return Math.max(0.1, vecP);
 		}
 
 	}

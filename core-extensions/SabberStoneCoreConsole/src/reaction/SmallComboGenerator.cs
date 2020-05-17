@@ -77,9 +77,9 @@ namespace SabberStoneCoreConsole.src
 				foreach (SmallCombo combo in comboTemp)
 				{
 					//Console.WriteLine(combo.Score);
-					if (combo.RMScore >= 0 && combo.RMScore < 15)
+					if (combo.RMScore > 30)
 						result.Add(combo);
-					else if (combo.Tags.Contains("AOE") && combo.AOEScore < 80)
+					else if (combo.AOEScore > 60)
 						result.Add(combo);
 					else if (combo.Tags.Contains("High Quality") && combo.HQScore > 8)
 						result.Add(combo);

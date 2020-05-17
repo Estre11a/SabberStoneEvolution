@@ -161,7 +161,7 @@ namespace SabberStoneCoreConsole.src
 			{
 				TotalScore += OneRoundRemove(AICard, combo, comboClass); //health
 			}
-			return TotalScore;
+			return 45 - TotalScore;
 		}
 
 
@@ -184,7 +184,7 @@ namespace SabberStoneCoreConsole.src
 			{
 				TotalScore += OneRoundAOE(AICards, combo, comboClass); //health
 			}
-			return TotalScore;
+			return 143 - TotalScore;
 
 		}
 		/*public static int TestHQ(List<Card> combo, string comboClass)
